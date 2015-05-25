@@ -1,13 +1,15 @@
 window.onload = function() {
 	
-	var MAX_TIME_TO_RSVP = 60,
-		timer = document.getElementById('timer');
+	var MAX_TIME_TO_RSVP = 60*1000,
+		endTime = new Date(new Date().getTime() + MAX_TIME_TO_RSVP).getTime(),
+		timer = document.getElementById('timer'),
+		countdown, id;
 
-	console.log(timer);
-	var id = setInterval(function() {
-		timer.innerHTML = MAX_TIME_TO_RSVP;
-		MAX_TIME_TO_RSVP--;
-		if (MAX_TIME_TO_RSVP === -1) {
+	id = setInterval(function() {
+		countdown = Math.round((endTime - new Date().getTime()) / 1000);
+		timer.innerHTML = countdown;
+		console.log(countdown);
+		if (countdown === 0) {
 			var link = document.getElementById('inviteUrl');
 			link.innerHTML = '';
 			clearInterval(id);
