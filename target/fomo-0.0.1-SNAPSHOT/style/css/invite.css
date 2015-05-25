@@ -1,0 +1,41 @@
+html {
+	background: url(/fomo/image/party.jpg) no-repeat center center fixed;
+	background-size: cover;
+}
+body {
+	margin: 50px;
+}
+p {
+	margin: 0;
+}
+#content {
+	background: black;
+	color: white;
+	font-family: arial, sans-serif;
+	height: 100%;
+	margin: 0 auto;
+	opacity: .65;
+	padding: 20px;
+	width: 700px;
+}
+.text-center {
+	text-align: center;
+}
+#timer {
+	font-size: 200px;
+	margin: 0;
+}
+a {
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:hover {
+	color: white;
+	text-decoration: underline;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+}

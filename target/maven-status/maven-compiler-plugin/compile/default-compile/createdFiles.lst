@@ -1,0 +1,10 @@
+org/hibernate/connection/HibernateUtil.class
+fomo/util/FileIO.class
+org/hibernate/connection/TomcatJDBCConnectionProvider.class
+fomo/core/Email$1.class
+fomo/core/Email.class
+fomo/web/Create.class
+fomo/web/Invite.class
+fomo/dao/DaoInvite.class
+fomo/db/DbInvite.class
+fomo/web/Thanks.class
