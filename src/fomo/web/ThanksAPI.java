@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/thanks/*")
-public class Thanks extends HttpServlet {
+public class ThanksAPI extends HttpServlet {
 
 	private static final long serialVersionUID = -956766345178079716L;
 

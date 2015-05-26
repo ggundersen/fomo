@@ -1,4 +1,4 @@
-package fomo.db;
+package fomo.model;
 
 import java.util.UUID;
 
@@ -9,16 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Invites")
-public class DbInvite {
+@Table(name = "Invite")
+public class Invite {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "event_id")
-	private int invite_id;
+	@Column(name = "id")
+	private int id;
 
 	@Column(name = "name")
 	private String name;
@@ -33,25 +35,26 @@ public class DbInvite {
 	private boolean expired;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="event_fk")
-	private DbEvent event;
+	@JoinColumn(name = "event_fk")
+	private Event event;
 
-	public DbInvite() {
-	}
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Guest guest;
 
-	public DbInvite(String name, DbEvent event) {
-		this.name = name;
+	public Invite(Event event, Guest guest) {
 		this.uuid = UUID.randomUUID().toString();
 		this.expired = false;
 		this.event = event;
+		this.guest = guest;
 	}
 
 	public int getId() {
-		return this.invite_id;
+		return id;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -59,19 +62,11 @@ public class DbInvite {
 	}
 
 	public String getUuid() {
-		return this.uuid;
+		return uuid;
 	}
 
 	public void setUuid(String tempId) {
 		this.uuid = tempId;
-	}
-
-	public String getInviteeName() {
-		return this.inviteeName;
-	}
-
-	public void setInviteeName(String inviteeName) {
-		this.inviteeName = inviteeName;
 	}
 
 	public boolean isExpired() {
@@ -82,11 +77,19 @@ public class DbInvite {
 		this.expired = expired;
 	}
 
-	public DbEvent getEvent() {
-		return this.event;
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setEvent(DbEvent dbEvent) {
+	public void setEvent(Event dbEvent) {
 		this.event = dbEvent;
+	}
+
+	public Guest getGuest() {
+		return guest;
+	}
+
+	public void setGuest(Guest guest) {
+		this.guest = guest;
 	}
 }

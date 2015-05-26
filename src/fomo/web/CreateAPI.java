@@ -2,9 +2,8 @@ package fomo.web;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +16,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.connection.HibernateUtil;
 
-import fomo.dao.DaoEvent;
-import fomo.dao.DaoInvite;
-import fomo.db.DbEvent;
-import fomo.db.DbInvite;
+import fomo.model.Event;
+import fomo.model.Guest;
+import fomo.model.Host;
+import fomo.model.Invite;
 
 @WebServlet("/create")
-public class Create extends HttpServlet {
+public class CreateAPI extends HttpServlet {
 
 	private static final long serialVersionUID = -7444063209623350028L;
 
@@ -31,38 +30,35 @@ public class Create extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		String newTempId = null;
-		String name = "summertime cookout";
-		String hostName = "biggie";
-		Date datetime = new Date();
-		String location = "brooklyn";
-		String description = "bullshit and party";
-		DbEvent dbEvent = null;
+		Event event = null;
+		Host host = null;
 		Session dbSession = null;
 		Transaction dbTransaction = null;
+		Invite invite = null;
 		try {
 			dbSession = HibernateUtil.getSessionFactory().openSession();
 			dbTransaction = dbSession.beginTransaction();
-
-			// Create event
-			dbEvent = DaoEvent.create(dbSession, name, hostName, datetime,
-					location, description);
-
-			// Create a set of invites
-			Set<DbInvite> invites = new HashSet<DbInvite>();
-			invites.add(DaoInvite.create(dbSession, dbEvent, "2pac"));
-
+			host = new Host("Christopher", "Wallace", "biggie@gmail.com");
+			event = new Event(host, "Summertime Cookout", new Date(),
+					"Bed-Stuy", "Bullshit and party");
+			Guest guest = new Guest("Shawn", "Carter", "jayz@gmail.com");
+			invite = new Invite(event, guest);
+			dbSession.save(invite);
+			dbSession.flush();
 			dbTransaction.commit();
 		} catch (HibernateException he) {
 			dbTransaction.rollback();
+		} catch (AddressException e) {
+			// Invalid user email address.
+			// This should be handled by some new use validation.
 		} finally {
 			if (dbSession != null) {
 				dbSession.close();
 			}
 		}
-		System.out.println(dbEvent);
+		String uuid = invite.getUuid();
 		req.getSession().setAttribute("url",
-				"http://localhost:8080/fomo/invite/" + newTempId);
+				"http://localhost:8080/fomo/invite/" + uuid);
 		RequestDispatcher view = req.getRequestDispatcher("html/create.jsp");
 		view.forward(req, resp);
 		// Email.send();

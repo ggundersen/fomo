@@ -1,29 +1,33 @@
-package fomo.db;
+package fomo.model;
 
 import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Events")
-public class DbEvent {
+@Table(name = "Event")
+public class Event {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "event_id")
-	private int event_id;
+	@Column(name = "id")
+	private int id;
 
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "host_name")
-	private String hostName;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="host_fk")
+	private Host host;
 
 	@Column(name = "datetime")
 	private Date datetime;
@@ -35,42 +39,40 @@ public class DbEvent {
 	private String description;
 
 	@OneToMany(mappedBy = "event")
-	private Set<DbInvite> invites;
+	private Set<Invite> invites;
 
-	public DbEvent() {
-	}
-
-	public DbEvent(String name, String hostName, Date datetime,
+	public Event(Host host, String name, Date datetime,
 			String location, String description) {
+		
+		this.host = host;
 		this.name = name;
-		this.hostName = hostName;
 		this.datetime = datetime;
 		this.location = location;
 		this.description = description;
 	}
 
 	public int getId() {
-		return this.event_id;
+		return id;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getHostName() {
-		return this.hostName;
+	public Host getHostName() {
+		return host;
 	}
 
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
+	public void setHostName(Host host) {
+		this.host = host;
 	}
 
 	public Date getDatetime() {
-		return this.datetime;
+		return datetime;
 	}
 
 	public void setDatetime(Date datetime) {
@@ -78,7 +80,7 @@ public class DbEvent {
 	}
 
 	public String getLocation() {
-		return this.location;
+		return location;
 	}
 
 	public void setLocation(String location) {
@@ -86,14 +88,14 @@ public class DbEvent {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public Set<DbInvite> getInvites() {
-		return this.invites;
+	public Set<Invite> getInvites() {
+		return invites;
 	}
 }

@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.connection.HibernateUtil;
+import org.hibernate.criterion.Restrictions;
 
 import fomo.core.TransientInvite;
-import fomo.dao.DaoInvite;
-import fomo.db.DbInvite;
+import fomo.model.Invite;
 
 @WebServlet("/invite/*")
-public class Invite extends HttpServlet {
+public class InviteAPI extends HttpServlet {
 
 	private static final long serialVersionUID = 1563652678138596437L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
 
 		String path = req.getPathInfo();
 		if (path != null) {
@@ -34,11 +34,13 @@ public class Invite extends HttpServlet {
 		
 		Session dbSession = null;
 		Transaction dbTransaction = null;
-		DbInvite dbInvite = null;
+		Invite invite = null;
 		try {
 			dbSession = HibernateUtil.getSessionFactory().openSession();
+			Criteria criteria = dbSession.createCriteria(Invite.class).add(
+					Restrictions.eq("uuid", path).ignoreCase());
+			invite = (Invite) criteria.uniqueResult();
 			dbTransaction = dbSession.beginTransaction();
-			dbInvite = DaoInvite.getByTempId(dbSession, path);
 		} catch (HibernateException he) {
 			dbTransaction.rollback();
 		} finally {
@@ -47,7 +49,7 @@ public class Invite extends HttpServlet {
 			}
 		}
 		
-		System.out.println(dbInvite.getEvent().getName());
+		System.out.println(invite.getEvent().getName());
 
 		new TransientInvite();
 		req.getRequestDispatcher("/html/invite.jsp").forward(req, resp);
