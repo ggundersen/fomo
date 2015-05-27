@@ -35,12 +35,15 @@ public class InviteAPI extends HttpServlet {
 		Session dbSession = null;
 		Transaction dbTransaction = null;
 		Invite invite = null;
+		String eventName = null;
 		try {
 			dbSession = HibernateUtil.getSessionFactory().openSession();
+			dbTransaction = dbSession.beginTransaction();
 			Criteria criteria = dbSession.createCriteria(Invite.class).add(
 					Restrictions.eq("uuid", path).ignoreCase());
 			invite = (Invite) criteria.uniqueResult();
-			dbTransaction = dbSession.beginTransaction();
+			eventName = invite.getEvent().getName();
+			dbTransaction.commit();
 		} catch (HibernateException he) {
 			dbTransaction.rollback();
 		} finally {
@@ -49,7 +52,7 @@ public class InviteAPI extends HttpServlet {
 			}
 		}
 		
-		System.out.println(invite.getEvent().getName());
+		System.out.println(eventName);
 
 		new TransientInvite();
 		req.getRequestDispatcher("/html/invite.jsp").forward(req, resp);

@@ -21,7 +21,7 @@ public class Event {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private long id;
 
 	@Column(name = "name")
 	private String name;
@@ -39,8 +39,11 @@ public class Event {
 	@Column(name = "description")
 	private String description;
 
-	@OneToMany(mappedBy = "event")
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
 	private Set<Invite> invites;
+
+	public Event() {
+	}
 
 	public Event(Host host, String name, Date datetime, String location,
 			String description) {
@@ -52,7 +55,7 @@ public class Event {
 		this.description = description;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

@@ -20,7 +20,7 @@ public class Invite {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private long id;
 
 	@Column(name = "uuid")
 	private String uuid;
@@ -46,7 +46,7 @@ public class Invite {
 		this.guest = guest;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

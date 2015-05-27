@@ -1,6 +1,7 @@
 package fomo.model;
 
 import javax.mail.internet.AddressException;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -9,8 +10,11 @@ import javax.persistence.Table;
 @Table(name = "Guest")
 public class Guest extends User {
 
-	@OneToOne(mappedBy = "guest")
+	@OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)
 	private Invite invite;
+
+	public Guest() {
+	}
 
 	public Guest(String firstName, String lastName, String email)
 			throws AddressException {

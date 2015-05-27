@@ -13,7 +13,7 @@ public class User {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private long id;
 
 	@Column(name = "firstName")
 	private String firstName;
@@ -24,6 +24,9 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
+	public User() {
+	}
+
 	public User(String firstName, String lastName, String email)
 			throws AddressException {
 		this.firstName = firstName;
@@ -33,7 +36,7 @@ public class User {
 		this.email = internetAddress.toString();
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

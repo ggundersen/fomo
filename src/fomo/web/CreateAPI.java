@@ -56,9 +56,9 @@ public class CreateAPI extends HttpServlet {
 				dbSession.close();
 			}
 		}
-		String uuid = invite.getUuid();
+
 		req.getSession().setAttribute("url",
-				"http://localhost:8080/fomo/invite/" + uuid);
+				"http://localhost:8080/fomo/invite/" + invite.getUuid());
 		RequestDispatcher view = req.getRequestDispatcher("html/create.jsp");
 		view.forward(req, resp);
 		// Email.send();
