@@ -1,11 +1,11 @@
 package fomo.model;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,14 +25,14 @@ public class Invite {
 	@Column(name = "uuid")
 	private String uuid;
 
-	@Column(name = "expired")
-	private boolean expired;
+	@Column(name = "expiration_date")
+	private Timestamp expirationDate;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guest_fk")
 	private Guest guest;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "event_fk")
 	private Event event;
 
@@ -41,7 +41,7 @@ public class Invite {
 
 	public Invite(Event event, Guest guest) {
 		this.uuid = UUID.randomUUID().toString();
-		this.expired = false;
+		this.expirationDate = null;
 		this.event = event;
 		this.guest = guest;
 	}
@@ -58,12 +58,12 @@ public class Invite {
 		this.uuid = uuid;
 	}
 
-	public boolean isExpired() {
-		return expired;
+	public Timestamp getExpirationDate() {
+		return expirationDate;
 	}
 
-	public void setExpired(boolean expired) {
-		this.expired = expired;
+	public void setExpirationDate(Timestamp expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 	public Guest getGuest() {

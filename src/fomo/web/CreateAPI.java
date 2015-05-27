@@ -50,7 +50,7 @@ public class CreateAPI extends HttpServlet {
 			dbTransaction.rollback();
 		} catch (AddressException e) {
 			// Invalid user email address.
-			// This should be handled by some new use validation.
+			// This should be handled by new user validation.
 		} finally {
 			if (dbSession != null) {
 				dbSession.close();

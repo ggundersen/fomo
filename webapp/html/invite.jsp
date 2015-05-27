@@ -8,7 +8,7 @@
 	<body>
 		<div id="content">
 			<h1 class="text-center">fomo</h1>
-			<div id="timer" class="text-center"></div>
+			<div id="timer" class="text-center">${timeLeft}</div>
 			<div class="text-center">
 				<p>Will you attend:</p>
 				<ul>
