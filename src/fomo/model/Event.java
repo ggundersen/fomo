@@ -3,6 +3,7 @@ package fomo.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,8 +26,8 @@ public class Event {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="host_fk")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "host_fk")
 	private Host host;
 
 	@Column(name = "datetime")
@@ -41,9 +42,9 @@ public class Event {
 	@OneToMany(mappedBy = "event")
 	private Set<Invite> invites;
 
-	public Event(Host host, String name, Date datetime,
-			String location, String description) {
-		
+	public Event(Host host, String name, Date datetime, String location,
+			String description) {
+
 		this.host = host;
 		this.name = name;
 		this.datetime = datetime;

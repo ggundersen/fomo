@@ -2,6 +2,7 @@ package fomo.model;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -22,25 +22,22 @@ public class Invite {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "name")
-	private String name;
-
 	@Column(name = "uuid")
 	private String uuid;
 
-	@Column(name = "invitee")
-	private String inviteeName;
-
 	@Column(name = "expired")
 	private boolean expired;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "guest_fk")
+	private Guest guest;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "event_fk")
 	private Event event;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Guest guest;
+	public Invite() {
+	}
 
 	public Invite(Event event, Guest guest) {
 		this.uuid = UUID.randomUUID().toString();
@@ -53,20 +50,12 @@ public class Invite {
 		return id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String tempId) {
-		this.uuid = tempId;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public boolean isExpired() {
@@ -77,19 +66,19 @@ public class Invite {
 		this.expired = expired;
 	}
 
-	public Event getEvent() {
-		return event;
-	}
-
-	public void setEvent(Event dbEvent) {
-		this.event = dbEvent;
-	}
-
 	public Guest getGuest() {
 		return guest;
 	}
 
 	public void setGuest(Guest guest) {
 		this.guest = guest;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 }

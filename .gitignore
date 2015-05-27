@@ -47,5 +47,4 @@ local.properties
 .texlipse
 
 # DB configuration
-# The username and password should be moved to a separate properties file.
-hibernate.cfg.xml
+hibernate.properties
