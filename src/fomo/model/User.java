@@ -15,11 +15,8 @@ public class User {
 	@Column(name = "id")
 	private long id;
 
-	@Column(name = "firstName")
-	private String firstName;
-
-	@Column(name = "lastName")
-	private String lastName;
+	@Column(name = "name")
+	private String name;
 
 	@Column(name = "email")
 	private String email;
@@ -27,10 +24,8 @@ public class User {
 	public User() {
 	}
 
-	public User(String firstName, String lastName, String email)
-			throws AddressException {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String name, String email) throws AddressException {
+		this.name = name;
 		InternetAddress internetAddress = new InternetAddress(email);
 		internetAddress.validate();
 		this.email = internetAddress.toString();
@@ -40,20 +35,12 @@ public class User {
 		return id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {

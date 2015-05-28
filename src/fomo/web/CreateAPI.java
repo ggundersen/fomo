@@ -28,8 +28,7 @@ public class CreateAPI extends HttpServlet {
 	private static final long serialVersionUID = -7444063209623350028L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Event event = null;
 		Host host = null;
@@ -40,9 +39,8 @@ public class CreateAPI extends HttpServlet {
 			dbSession = HibernateUtil.getSessionFactory().openSession();
 			dbTransaction = dbSession.beginTransaction();
 			host = new Host("Christopher", "Wallace", "biggie@gmail.com");
-			event = new Event(host, "Summertime Cookout", new Date(),
-					"Bed-Stuy", "Bullshit and party");
-			Guest guest = new Guest("Shawn", "Carter", "jayz@gmail.com");
+			event = new Event(host, "Summertime Cookout", new Date(), "Bed-Stuy", "Bullshit and party");
+			Guest guest = new Guest("Shawn Carter", "jayz@gmail.com");
 			invite = new Invite(event, guest);
 			dbSession.save(invite);
 			dbSession.flush();
@@ -57,10 +55,8 @@ public class CreateAPI extends HttpServlet {
 			}
 		}
 
-		req.getSession().setAttribute("url",
-				"http://localhost:8080/fomo/invite/" + invite.getUuid());
-		RequestDispatcher view = req.getRequestDispatcher(Constant.TEMPLATE_DIR
-				+ "create.jsp");
+		req.getSession().setAttribute("url", "http://localhost:8080/fomo/invite/" + invite.getUuid());
+		RequestDispatcher view = req.getRequestDispatcher(Constant.TEMPLATE_DIR + "create.jsp");
 		view.forward(req, resp);
 		// Email.send();
 	}

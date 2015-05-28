@@ -26,7 +26,7 @@ import fomo.util.Constant;
 public class InviteAPI extends HttpServlet {
 
 	private static final long serialVersionUID = 1563652678138596437L;
-	
+
 	private static long DURATION_SECS = 60;
 	private static long NANOSECS = 1000000000;
 	private static long MAX_TIME_NANOSECS = DURATION_SECS * NANOSECS;
@@ -61,7 +61,7 @@ public class InviteAPI extends HttpServlet {
 			String name = event.getName();
 			Host host = event.getHost();
 			String location = event.getLocation();
-			String hostName = host.getFirstName() + " " + host.getLastName();
+			String hostName = host.getName();
 			String description = event.getDescription();
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 			String datetime = df.format(event.getDatetime());

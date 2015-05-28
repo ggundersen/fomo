@@ -27,11 +27,18 @@
 		</plugins>
 	</build>
 	<dependencies>
+	
+		<!-- Web -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
 		</dependency>
 
 		<!-- DB management -->
@@ -56,10 +63,11 @@
 			<version>4.1.8.Final</version>
 		</dependency>
 
+		<!-- User management -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.3m</version>
 		</dependency>
 	</dependencies>
 </project>

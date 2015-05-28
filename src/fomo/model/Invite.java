@@ -26,11 +26,11 @@ public class Invite {
 
 	@Column(name = "expiration_date")
 	private Long expirationTime;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guest_fk")
 	private Guest guest;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "event_fk")
 	private Event event;

@@ -16,9 +16,8 @@ public class Guest extends User {
 	public Guest() {
 	}
 
-	public Guest(String firstName, String lastName, String email)
-			throws AddressException {
-		super(firstName, lastName, email);
+	public Guest(String firstName, String name) throws AddressException {
+		super(firstName, name);
 	}
 
 	public Invite getEvent() {
