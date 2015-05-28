@@ -1,0 +1,23 @@
+html,
+body {
+	background-color: #ffe90e;
+	height: 100%;
+}
+body {
+	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+.content {
+	margin: 0 auto;
+	width: 500px;
+}
+a,
+a:active,
+a:focus,
+a:hover,
+a:visited {
+	color: #444;
+	text-decoration: none;
+}
+a:hover {
+	color: black;
+}

@@ -1,0 +1,17 @@
+.content {
+	background: white;
+	margin: 50px auto;
+	padding: 20px;
+	height: 100%;
+	width: 500px;
+}
+.content section {
+	border-bottom: 1px solid #eee;
+}
+.content table td {
+	padding: 5px 0;
+}
+.content table,
+.content table td input {
+	width: 100%;
+}

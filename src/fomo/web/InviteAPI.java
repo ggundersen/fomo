@@ -1,7 +1,8 @@
 package fomo.web;
 
 import java.io.IOException;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,11 +57,14 @@ public class InviteAPI extends HttpServlet {
 			}
 
 			Event event = invite.getEvent();
+			long eventId = event.getId();
 			String name = event.getName();
 			Host host = event.getHost();
+			String location = event.getLocation();
 			String hostName = host.getFirstName() + " " + host.getLastName();
 			String description = event.getDescription();
-			Date datetime = event.getDatetime();
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+			String datetime = df.format(event.getDatetime());
 
 			Long expirationTime = invite.getExpirationTime();
 			long now = System.nanoTime();
@@ -70,16 +74,20 @@ public class InviteAPI extends HttpServlet {
 				dbSession.merge(invite);
 				req.getSession().setAttribute("name", name);
 				req.getSession().setAttribute("host", hostName);
-				req.getSession().setAttribute("time", datetime.getTime());
+				req.getSession().setAttribute("time", datetime);
+				req.getSession().setAttribute("location", location);
 				req.getSession().setAttribute("description", description);
 				req.getSession().setAttribute("timeLeft", DURATION_SECS);
+				req.getSession().setAttribute("eventId", eventId);
 				req.getRequestDispatcher(Constant.TEMPLATE_DIR + "invite.jsp").forward(req, resp);
 			} else if (now - expirationTime < 0) {
 				req.getSession().setAttribute("name", name);
 				req.getSession().setAttribute("host", hostName);
-				req.getSession().setAttribute("time", datetime.getTime());
+				req.getSession().setAttribute("time", datetime);
+				req.getSession().setAttribute("location", location);
 				req.getSession().setAttribute("description", description);
 				req.getSession().setAttribute("timeLeft", (expirationTime - now) / NANOSECS);
+				req.getSession().setAttribute("eventId", path);
 				req.getRequestDispatcher(Constant.TEMPLATE_DIR + "invite.jsp").forward(req, resp);
 			} else if (now - expirationTime > 0) {
 				req.getRequestDispatcher(Constant.TEMPLATE_DIR + "expired.html").forward(req, resp);
