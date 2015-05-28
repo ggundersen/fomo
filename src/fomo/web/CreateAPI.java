@@ -20,6 +20,7 @@ import fomo.model.Event;
 import fomo.model.Guest;
 import fomo.model.Host;
 import fomo.model.Invite;
+import fomo.util.Constant;
 
 @WebServlet("/create")
 public class CreateAPI extends HttpServlet {
@@ -49,8 +50,7 @@ public class CreateAPI extends HttpServlet {
 		} catch (HibernateException he) {
 			dbTransaction.rollback();
 		} catch (AddressException e) {
-			// Invalid user email address.
-			// This should be handled by new user validation.
+			// TODO: Handle this exception.
 		} finally {
 			if (dbSession != null) {
 				dbSession.close();
@@ -59,7 +59,8 @@ public class CreateAPI extends HttpServlet {
 
 		req.getSession().setAttribute("url",
 				"http://localhost:8080/fomo/invite/" + invite.getUuid());
-		RequestDispatcher view = req.getRequestDispatcher("html/create.jsp");
+		RequestDispatcher view = req.getRequestDispatcher(Constant.TEMPLATE_DIR
+				+ "create.jsp");
 		view.forward(req, resp);
 		// Email.send();
 	}

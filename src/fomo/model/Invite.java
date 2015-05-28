@@ -1,6 +1,5 @@
 package fomo.model;
 
-import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ public class Invite {
 	private String uuid;
 
 	@Column(name = "expiration_date")
-	private Timestamp expirationDate;
+	private Long expirationTime;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guest_fk")
@@ -41,7 +40,7 @@ public class Invite {
 
 	public Invite(Event event, Guest guest) {
 		this.uuid = UUID.randomUUID().toString();
-		this.expirationDate = null;
+		this.expirationTime = null;
 		this.event = event;
 		this.guest = guest;
 	}
@@ -58,12 +57,12 @@ public class Invite {
 		this.uuid = uuid;
 	}
 
-	public Timestamp getExpirationDate() {
-		return expirationDate;
+	public Long getExpirationTime() {
+		return expirationTime;
 	}
 
-	public void setExpirationDate(Timestamp expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setExpirationTime(Long expirationTime) {
+		this.expirationTime = expirationTime;
 	}
 
 	public Guest getGuest() {

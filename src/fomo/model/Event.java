@@ -67,7 +67,7 @@ public class Event {
 		this.name = name;
 	}
 
-	public Host getHostName() {
+	public Host getHost() {
 		return host;
 	}
 
