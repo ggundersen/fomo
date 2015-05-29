@@ -47,4 +47,4 @@ local.properties
 .texlipse
 
 # DB configuration
-hibernate.properties
+*.properties

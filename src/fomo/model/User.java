@@ -8,7 +8,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-import fomo.core.Password;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -22,9 +22,19 @@ public class User extends Person {
 	public User() {
 	}
 
-	public User(String name, String email, String plaintext_password) throws AddressException {
+	public User(String name, String email, String plaintextPassword) throws AddressException {
 		super(name, email);
-		this.password = Password.hash(plaintext_password);
+		this.password = hash(plaintextPassword);
+	}
+	
+	private String hash(String plaintextPassword) {
+		// BCrypt incorporates the salt to the end of the password. We don't
+		// have to store it.
+		return BCrypt.hashpw(plaintextPassword, BCrypt.gensalt());
+	}
+	
+	private boolean isValidPassword(String candiate) {
+		return BCrypt.checkpw(candiate, this.password);
 	}
 
 	public String getPassword() {
