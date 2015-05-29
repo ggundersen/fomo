@@ -18,9 +18,8 @@ public class Host extends User {
 	public Host() {
 	}
 
-	public Host(String firstName, String lastName, String email)
-			throws AddressException {
-		super(firstName, lastName, email);
+	public Host(String name, String email) throws AddressException {
+		super(name, email);
 	}
 
 	public Set<Event> getEvents() {
