@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Guest")
-public class Guest extends User {
+public class Guest extends Person {
 
 	@OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)
 	private Invite invite;
@@ -16,8 +16,8 @@ public class Guest extends User {
 	public Guest() {
 	}
 
-	public Guest(String firstName, String name) throws AddressException {
-		super(firstName, name);
+	public Guest(String name, String email) throws AddressException {
+		super(name, email);
 	}
 
 	public Invite getEvent() {

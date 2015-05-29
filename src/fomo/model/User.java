@@ -1,53 +1,37 @@
 package fomo.model;
 
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
-@MappedSuperclass
-public class User {
+import fomo.core.Password;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private long id;
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "is_host")
+@Table(name = "User")
+public class User extends Person {
 
-	@Column(name = "name")
-	private String name;
-
-	@Column(name = "email")
-	private String email;
+	@Column(name = "password")
+	private String password;
 
 	public User() {
 	}
 
-	public User(String name, String email) throws AddressException {
-		this.name = name;
-		InternetAddress internetAddress = new InternetAddress(email);
-		internetAddress.validate();
-		this.email = internetAddress.toString();
+	public User(String name, String email, String plaintext_password) throws AddressException {
+		super(name, email);
+		this.password = Password.hash(plaintext_password);
 	}
 
-	public long getId() {
-		return id;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
