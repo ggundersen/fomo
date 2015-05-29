@@ -1,7 +1,7 @@
 package org.hibernate.connection;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -9,23 +9,42 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
-	private static ServiceRegistry serviceRegistry;
 
 	static {
 		try {
-			Configuration configuration = new Configuration();
-		    configuration.configure();
-		    serviceRegistry = new ServiceRegistryBuilder().applySettings(
-		            configuration.getProperties()). buildServiceRegistry();
-		    sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+			Configuration configuration = new Configuration().configure();
+			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable ex) {
-			// Log the exception.
-			System.err.println("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
 
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
+	public static Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
+	public static void beginTransaction() {
+		getCurrentSession().beginTransaction();
+	}
+
+	public static void saveOrUpdate(Object object) {
+		getCurrentSession().saveOrUpdate(object);
+	}
+
+	public static void commitTransaction() {
+		getCurrentSession().getTransaction().commit();
+	}
+
+	public static void rollbackTransaction() {
+		getCurrentSession().getTransaction().rollback();
+	}
+
+	public static void closeSession() {
+		getCurrentSession().close();
+	}
+
+	public static void shutdown() {
+		sessionFactory.close();
 	}
 }

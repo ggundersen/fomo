@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.connection.HibernateUtil;
 
 import fomo.model.Event;
@@ -32,32 +30,25 @@ public class CreateAPI extends HttpServlet {
 
 		Event event = null;
 		Host host = null;
-		Session dbSession = null;
-		Transaction dbTransaction = null;
 		Invite invite = null;
 		try {
-			dbSession = HibernateUtil.getSessionFactory().openSession();
-			dbTransaction = dbSession.beginTransaction();
+			HibernateUtil.beginTransaction();
 			host = new Host("Christopher Wallace", "biggie@gmail.com");
 			event = new Event(host, "Summertime Cookout", new Date(), "Bed-Stuy", "Bullshit and party");
 			Guest guest = new Guest("Shawn Carter", "jayz@gmail.com");
 			invite = new Invite(event, guest);
-			dbSession.save(invite);
-			dbSession.flush();
-			dbTransaction.commit();
+			HibernateUtil.saveOrUpdate(invite);
+			HibernateUtil.commitTransaction();
 		} catch (HibernateException he) {
-			dbTransaction.rollback();
+			HibernateUtil.rollbackTransaction();
 		} catch (AddressException e) {
-			// TODO: Handle this exception.
+			// TODO.
 		} finally {
-			if (dbSession != null) {
-				dbSession.close();
-			}
+			HibernateUtil.closeSession();
 		}
 
 		req.getSession().setAttribute("url", "http://localhost:8080/fomo/invite/" + invite.getUuid());
 		RequestDispatcher view = req.getRequestDispatcher(Constant.TEMPLATE_DIR + "create.jsp");
 		view.forward(req, resp);
-		// Email.send();
 	}
 }

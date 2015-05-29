@@ -41,13 +41,10 @@ public class InviteAPI extends HttpServlet {
 		}
 		path = path.substring(1);
 
-		Session dbSession = null;
-		Transaction dbTransaction = null;
 		Invite invite = null;
 		try {
-			dbSession = HibernateUtil.getSessionFactory().openSession();
-			dbTransaction = dbSession.beginTransaction();
-			Criteria criteria = dbSession.createCriteria(Invite.class).add(Restrictions.eq("uuid", path).ignoreCase());
+			HibernateUtil.beginTransaction();
+			Criteria criteria = HibernateUtil.getCurrentSession().createCriteria(Invite.class).add(Restrictions.eq("uuid", path).ignoreCase());
 			invite = (Invite) criteria.uniqueResult();
 
 			System.out.println(invite);
@@ -71,7 +68,7 @@ public class InviteAPI extends HttpServlet {
 			if (expirationTime == null) {
 				long newExpirationTime = System.nanoTime() + MAX_TIME_NANOSECS;
 				invite.setExpirationTime(newExpirationTime);
-				dbSession.merge(invite);
+				HibernateUtil.saveOrUpdate(invite);
 				req.getSession().setAttribute("name", name);
 				req.getSession().setAttribute("host", hostName);
 				req.getSession().setAttribute("time", datetime);
@@ -93,13 +90,11 @@ public class InviteAPI extends HttpServlet {
 				req.getRequestDispatcher(Constant.TEMPLATE_DIR + "expired.html").forward(req, resp);
 			}
 
-			dbTransaction.commit();
+			HibernateUtil.commitTransaction();
 		} catch (HibernateException he) {
 			// TODO: Handle this.
 		} finally {
-			if (dbSession != null) {
-				dbSession.close();
-			}
+			HibernateUtil.closeSession();
 		}
 	}
 }
