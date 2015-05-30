@@ -1,13 +1,8 @@
-.content {
+body,
+html {
+	background-color: #ffe90e;
+}.content {
 	margin: 50px auto;
-}
-footer {
-	background: white;
-	bottom: 0;
-	height: 50px;
-	padding: 10px;
-	position: absolute;
-	width: 100%;
 }
 img {
 	bottom: 0;
@@ -16,12 +11,4 @@ img {
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-li {
-	display: inline;
-	margin: 0 10px;
 }

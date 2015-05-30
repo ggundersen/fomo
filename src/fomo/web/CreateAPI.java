@@ -48,7 +48,6 @@ public class CreateAPI extends HttpServlet {
 		}
 
 		req.getSession().setAttribute("url", "http://localhost:8080/fomo/invite/" + invite.getUuid());
-		RequestDispatcher view = req.getRequestDispatcher(Constant.TEMPLATE_DIR + "create.jsp");
-		view.forward(req, resp);
+		req.getRequestDispatcher(Constant.TEMPLATE_DIR + "create.jsp").forward(req, resp);
 	}
 }

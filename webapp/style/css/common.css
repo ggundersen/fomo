@@ -1,6 +1,5 @@
 html,
 body {
-	background-color: #ffe90e;
 	height: 100%;
 }
 body {
@@ -20,4 +19,24 @@ a:visited {
 }
 a:hover {
 	color: black;
+}
+#navbar {
+	background-color: #ffe90e;
+	width: 100%;
+}
+#footer {
+	background: white;
+	bottom: 0;
+	height: 50px;
+	padding: 10px;
+	position: absolute;
+	width: 100%;
+}
+#footer ul {
+	list-style-type: none;
+	padding: 0;
+}
+#footer li {
+	display: inline;
+	margin: 0 10px;
 }

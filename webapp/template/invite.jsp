@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<%@include file="common_includes.html" %>
+		<%@include file="partial/common_includes.html" %>
 		<link rel="stylesheet" type="text/css" href="/fomo/style/css/invite.css">
 		<script type="text/javascript" src="../view/Timer.js"></script>
 	</head>

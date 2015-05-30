@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<%@include file="common_includes.html" %>
+		<%@include file="partial/common_includes.html" %>
 		<link rel="stylesheet" type="text/css" href="/fomo/style/css/create.css">
 	</head>
 	<body>
+		<%@include file="partial/navbar.html" %>
 		<div class="container content">
 			<section>
 				<a href="${url}" target="_blank">Example invite</a>

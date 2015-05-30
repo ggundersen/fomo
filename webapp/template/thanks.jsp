@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<%@include file="common_includes.html" %>
+		<%@include file="partial/common_includes.html" %>
 		<link rel="stylesheet" type="text/css" href="/fomo/style/css/thanks.css">
 	</head>
 	<body>
