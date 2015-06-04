@@ -33,9 +33,10 @@ public class CreateAPI extends HttpServlet {
 		Invite invite = null;
 		try {
 			HibernateUtil.beginTransaction();
+			// TODO: Confirm user exists first.
 			host = new Host("Christopher Wallace", "biggie@gmail.com", "password");
 			event = new Event(host, "Summertime Cookout", new Date(), "Bed-Stuy", "Bullshit and party");
-			Guest guest = new Guest("Shawn Carter", "jayz@gmail.com");
+			Guest guest = new Guest("jayz@gmail.com");
 			invite = new Invite(event, guest);
 			HibernateUtil.saveOrUpdate(invite);
 			HibernateUtil.commitTransaction();

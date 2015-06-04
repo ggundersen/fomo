@@ -16,14 +16,14 @@ import org.mindrot.jbcrypt.BCrypt;
 @Table(name = "User")
 public class User extends Person {
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	public User() {
 	}
 
-	public User(String name, String email, String plaintextPassword) throws AddressException {
-		super(name, email);
+	public User(String email, String plaintextPassword, String name) throws AddressException {
+		super(email, name);
 		this.password = hash(plaintextPassword);
 	}
 	
@@ -33,7 +33,7 @@ public class User extends Person {
 		return BCrypt.hashpw(plaintextPassword, BCrypt.gensalt());
 	}
 	
-	private boolean isValidPassword(String candiate) {
+	public boolean isValidPassword(String candiate) {
 		return BCrypt.checkpw(candiate, this.password);
 	}
 
