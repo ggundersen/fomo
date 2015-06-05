@@ -8,6 +8,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import fomo.util.DAO;
+
 @Entity
 @DiscriminatorValue(value = "true")
 public class Host extends User {
@@ -18,8 +20,8 @@ public class Host extends User {
 	public Host() {
 	}
 	
-	public Host(String email, String password, String name) throws AddressException {
-		super(email, password, name);
+	public Host(String email, String password) throws AddressException {
+		super(email, password, DAO.getUsernameByEmail(email));
 	}
 
 	public Set<Event> getEvents() {

@@ -11,6 +11,8 @@
 			<form action="register" method="post">
 				<label>Email</label>
 				<input type="text" name="email">
+				<label>Username</label>
+				<input type="text" name="username">
 				<label>Password</label>
 				<input type="text" name="password">
 				<label>Repeat password</label>

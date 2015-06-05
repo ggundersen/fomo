@@ -6,7 +6,7 @@
 	<body>
 		<%@include file="partial/navbar.html" %>
 		<div class="container content">
-			<p>User ${username} was successfully created!</p>
+			<p>An account for ${email} was successfully created!</p>
 		</div>
 		<%@include file="partial/footer.html" %>
 	</body>

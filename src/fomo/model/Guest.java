@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Guest")
+@Table(name = "guest")
 public class Guest extends Person {
 
 	@OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)

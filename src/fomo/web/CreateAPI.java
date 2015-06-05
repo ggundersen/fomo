@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.mail.internet.AddressException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,28 +26,25 @@ public class CreateAPI extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		Event event = null;
 		Host host = null;
 		Invite invite = null;
 		try {
 			HibernateUtil.beginTransaction();
 			// TODO: Confirm user exists first.
-			host = new Host("Christopher Wallace", "biggie@gmail.com", "password");
+			host = new Host("biggie@gmail.com", "password");
 			event = new Event(host, "Summertime Cookout", new Date(), "Bed-Stuy", "Bullshit and party");
 			Guest guest = new Guest("jayz@gmail.com");
 			invite = new Invite(event, guest);
 			HibernateUtil.saveOrUpdate(invite);
 			HibernateUtil.commitTransaction();
-		} catch (HibernateException he) {
+		} catch (HibernateException | AddressException he) {
 			HibernateUtil.rollbackTransaction();
-		} catch (AddressException e) {
-			// TODO.
 		} finally {
 			HibernateUtil.closeSession();
 		}
 
-		req.getSession().setAttribute("url", "http://localhost:8080/fomo/invite/" + invite.getUuid());
+		//req.setAttribute("url", "invite/" + invite.getUuid());
 		req.getRequestDispatcher(Constant.TEMPLATE_DIR + "create.jsp").forward(req, resp);
 	}
 }

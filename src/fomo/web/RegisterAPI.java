@@ -31,7 +31,7 @@ public class RegisterAPI extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		String name = req.getParameter("name");
+		String username = req.getParameter("username");
 		User user = null;
 		boolean userAlreadyExists = false;
 
@@ -42,21 +42,18 @@ public class RegisterAPI extends HttpServlet {
 			if (user != null) {
 				userAlreadyExists = true;
 			} else {
-				User newUser = new User(email, password, name);
-				HibernateUtil.saveOrUpdate(newUser);
-				req.getSession().setAttribute("user", newUser);
+				user = new User(email, password, username);
+				HibernateUtil.saveOrUpdate(user);
 			}
 			HibernateUtil.commitTransaction();
-		} catch (HibernateException he) {
-			// TODO.
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
+		} catch (AddressException | HibernateException e) {
 			e.printStackTrace();
 		} finally {
 			HibernateUtil.closeSession();
 		}
 
 		if (user != null && !userAlreadyExists) {
+			req.setAttribute("email", user.getEmail());
 			req.getRequestDispatcher(Constant.TEMPLATE_DIR + "user_success.jsp").forward(req, resp);
 		}
 	}
